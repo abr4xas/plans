@@ -14,7 +14,7 @@ class CreatePlansTable extends Migration
     public function up()
     {
         Schema::create('plans', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
             $table->string('name');
             $table->text('description')->nullable();
@@ -22,15 +22,15 @@ class CreatePlansTable extends Migration
             $table->float('price', 8, 2);
             $table->string('currency');
 
-            $table->integer('duration')->default(30);
+            $table->unsignedInteger('duration')->default(30);
             $table->mediumText('metadata')->nullable();
 
             $table->timestamps();
         });
 
         Schema::create('plan_features', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('plan_id');
+            $table->bigIncrements('id');
+            $table->unsignedInteger('plan_id');
 
             $table->string('name');
             $table->string('code');
@@ -44,10 +44,10 @@ class CreatePlansTable extends Migration
         });
 
         Schema::create('plan_subscriptions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('plan_id');
+            $table->bigIncrements('id');
+            $table->unsignedInteger('plan_id');
 
-            $table->integer('model_id');
+            $table->unsignedInteger('model_id');
             $table->string('model_type');
 
             $table->string('payment_method')->nullable()->default(null);
@@ -57,7 +57,7 @@ class CreatePlansTable extends Migration
             $table->string('charging_currency')->nullable();
 
             $table->boolean('is_recurring')->default(true);
-            $table->integer('recurring_each_days')->default(30);
+            $table->unsignedInteger('recurring_each_days')->default(30);
 
             $table->timestamp('starts_on')->nullable();
             $table->timestamp('expires_on')->nullable();
@@ -67,8 +67,8 @@ class CreatePlansTable extends Migration
         });
 
         Schema::create('plan_subscription_usages', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('subscription_id');
+            $table->bigIncrements('id');
+            $table->unsignedInteger('subscription_id');
 
             $table->string('code');
             $table->float('used', 9, 2)->default(0);
@@ -77,9 +77,9 @@ class CreatePlansTable extends Migration
         });
 
         Schema::create('stripe_customers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
-            $table->integer('model_id');
+            $table->unsignedInteger('model_id');
             $table->string('model_type');
 
             $table->string('customer_id');

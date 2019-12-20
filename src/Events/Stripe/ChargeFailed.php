@@ -1,6 +1,6 @@
 <?php
 
-namespace Rennokki\Plans\Events\Stripe;
+namespace Abr4xas\Plans\Events\Stripe;
 
 use Illuminate\Queue\SerializesModels;
 

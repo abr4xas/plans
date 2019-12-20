@@ -8,12 +8,12 @@ return [
 
     'models' => [
 
-        'plan' => \Rennokki\Plans\Models\PlanModel::class,
-        'subscription' => \Rennokki\Plans\Models\PlanSubscriptionModel::class,
-        'feature' => \Rennokki\Plans\Models\PlanFeatureModel::class,
-        'usage' => \Rennokki\Plans\Models\PlanSubscriptionUsageModel::class,
+        'plan' => \Abr4xas\Plans\Models\PlanModel::class,
+        'subscription' => \Abr4xas\Plans\Models\PlanSubscriptionModel::class,
+        'feature' => \Abr4xas\Plans\Models\PlanFeatureModel::class,
+        'usage' => \Abr4xas\Plans\Models\PlanSubscriptionUsageModel::class,
 
-        'stripeCustomer' => \Rennokki\Plans\Models\StripeCustomerModel::class,
+        'stripeCustomer' => \Abr4xas\Plans\Models\StripeCustomerModel::class,
 
     ],
     /*

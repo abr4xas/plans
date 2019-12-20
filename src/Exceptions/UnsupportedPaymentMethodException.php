@@ -1,6 +1,6 @@
 <?php
 
-namespace Rennokki\Plans\Exceptions;
+namespace Abr4xas\Plans\Exceptions;
 
 use Exception;
 

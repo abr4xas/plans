@@ -1,16 +1,16 @@
 <?php
 
-namespace Rennokki\Plans\Test;
+namespace Abr4xas\Plans\Test;
 
 use Stripe\Stripe;
 use Stripe\Token as StripeToken;
-use Rennokki\Plans\Models\PlanModel;
-use Rennokki\Plans\Test\Models\User;
-use Rennokki\Plans\Models\PlanFeatureModel;
+use Abr4xas\Plans\Models\PlanModel;
+use Abr4xas\Plans\Test\Models\User;
+use Abr4xas\Plans\Models\PlanFeatureModel;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Rennokki\Plans\Models\StripeCustomerModel;
-use Rennokki\Plans\Models\PlanSubscriptionModel;
-use Rennokki\Plans\Models\PlanSubscriptionUsageModel;
+use Abr4xas\Plans\Models\StripeCustomerModel;
+use Abr4xas\Plans\Models\PlanSubscriptionModel;
+use Abr4xas\Plans\Models\PlanSubscriptionUsageModel;
 
 abstract class TestCase extends Orchestra
 {
@@ -32,7 +32,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            \Rennokki\Plans\PlansServiceProvider::class,
+            \Abr4xas\Plans\PlansServiceProvider::class,
         ];
     }
 

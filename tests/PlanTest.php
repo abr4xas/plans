@@ -1,6 +1,6 @@
 <?php
 
-namespace Rennokki\Plans\Test;
+namespace Abr4xas\Plans\Test;
 
 use Carbon\Carbon;
 
@@ -14,9 +14,9 @@ class PlanTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(\Rennokki\Plans\Test\Models\User::class)->create();
-        $this->plan = factory(\Rennokki\Plans\Models\PlanModel::class)->create();
-        $this->newPlan = factory(\Rennokki\Plans\Models\PlanModel::class)->create();
+        $this->user = factory(\Abr4xas\Plans\Test\Models\User::class)->create();
+        $this->plan = factory(\Abr4xas\Plans\Models\PlanModel::class)->create();
+        $this->newPlan = factory(\Abr4xas\Plans\Models\PlanModel::class)->create();
     }
 
     /**
