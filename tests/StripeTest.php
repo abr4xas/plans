@@ -3,6 +3,7 @@
 namespace Abr4xas\Plans\Test;
 
 use Carbon\Carbon;
+use Abr4xas\Plans\Tests\TestCase;
 
 class StripeTest extends TestCase
 {

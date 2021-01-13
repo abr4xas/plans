@@ -2,8 +2,8 @@
 
 namespace Abr4xas\Plans;
 
-use Illuminate\Support\ServiceProvider;
 use Abr4xas\Plans\Commands\PlansCommand;
+use Illuminate\Support\ServiceProvider;
 
 class PlansServiceProvider extends ServiceProvider
 {
@@ -14,9 +14,9 @@ class PlansServiceProvider extends ServiceProvider
                 __DIR__ . '/../config/plans.php' => config_path('plans.php'),
             ], 'config');
 
-            $this->publishes([
-                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/plans'),
-            ], 'views');
+            // $this->publishes([
+            //     __DIR__ . '/../resources/views' => base_path('resources/views/vendor/plans'),
+            // ], 'views');
 
             $migrationFileName = 'create_plans_table.php';
             if (! $this->migrationFileExists($migrationFileName)) {
@@ -25,12 +25,12 @@ class PlansServiceProvider extends ServiceProvider
                 ], 'migrations');
             }
 
-            $this->commands([
-                PlansCommand::class,
-            ]);
+            // $this->commands([
+            //     PlansCommand::class,
+            // ]);
         }
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'plans');
+        // $this->loadViewsFrom(__DIR__ . '/../resources/views', 'plans');
     }
 
     public function register()

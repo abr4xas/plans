@@ -2,6 +2,7 @@
 
 namespace Abr4xas\Plans\Test;
 
+use Abr4xas\Plans\Tests\TestCase;
 use Abr4xas\Plans\Helpers\StripeHelper;
 
 class StripeHelperTest extends TestCase

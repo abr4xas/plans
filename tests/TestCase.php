@@ -2,9 +2,9 @@
 
 namespace Abr4xas\Plans\Tests;
 
+use Abr4xas\Plans\PlansServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Abr4xas\Plans\PlansServiceProvider;
 
 class TestCase extends Orchestra
 {
