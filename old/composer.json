@@ -1,0 +1,65 @@
+{
+	"name": "abr4xas/plans",
+	"description": "Laravel Plans is a package for SaaS apps that need management over plans, features, subscriptions, events for plans or limited, countable features.",
+	"keywords": [
+		"eloquent",
+		"laravel",
+		"subscription",
+		"plan",
+		"plans",
+		"model",
+		"saas"
+	],
+	"homepage": "https://github.com/abr4xas/plans",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Alex Renoki",
+			"email": "rennokki@gmail.com",
+			"homepage": "https://twitter.com/rennokki",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": "^7.4|^8.0",
+		"illuminate/contracts": "^8.0"
+	},
+	"require-dev": {
+		"friendsofphp/php-cs-fixer": "9999999-dev",
+		"orchestra/testbench": "^6.0",
+		"phpunit/phpunit": "^9.3",
+		"psalm/plugin-laravel": "1.x-dev",
+		"vimeo/psalm": "4.x-dev"
+	},
+	"autoload": {
+		"psr-4": {
+			"Abr4xas\\Plans\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Abr4xas\\Plans\\Test\\": "tests"
+		}
+	},
+	"scripts": {
+		"test": "vendor/bin/phpunit --colors=always",
+		"test:basic": "vendor/bin/phpunit --group basic",
+		"test:stripe": "vendor/bin/phpunit --group stripe",
+		"psalm": "vendor/bin/psalm",
+		"test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+		"format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+		"all": "composer psalm && composer test && composer test-coverage && composer format"
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Abr4xas\\Plans\\PlansServiceProvider"
+			]
+		}
+	},
+	"config": {
+		"sort-packages": true
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}
