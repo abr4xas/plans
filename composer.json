@@ -61,12 +61,12 @@
     "prefer-stable": true,
     "funding": [
         {
-            "type": "github",
-            "url": "https://github.com/sponsors/abr4xas"
+            "type": "patreon",
+            "url": "https://www.patreon.com/angelcruzdev"
         },
         {
             "type": "other",
-            "url": "https://tepuilabs.dev"
+            "url": "https://ko-fi.com/angelcruzdev"
         }
     ]
 }
