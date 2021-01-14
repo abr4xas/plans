@@ -42,30 +42,4 @@ class RecurrencyTest extends TestCase
         $this->assertTrue($this->user->hasActiveSubscription());
         $this->assertEquals($this->user->subscriptions()->count(), 2);
     }
-
-    /**
-     * @group stripe
-     */
-    public function testRecurrencyWithStripe()
-    {
-        $this->user->withStripe()->withStripeToken()->subscribeToUntil($this->plan, Carbon::now()->addDays(7));
-        sleep(1);
-
-        $this->user->currentSubscription()->update([
-            'starts_on' => Carbon::now()->subDays(7),
-            'expires_on' => Carbon::now(),
-        ]);
-
-        $this->assertFalse($this->user->hasActiveSubscription());
-        $this->assertEquals($this->user->subscriptions()->count(), 1);
-
-        $this->assertNotNull($this->user->renewSubscription());
-        sleep(1);
-
-        $activeSubscription = $this->user->activeSubscription();
-
-        $this->assertTrue($this->user->hasActiveSubscription());
-        $this->assertEquals($this->user->subscriptions()->count(), 2);
-        $this->assertTrue($activeSubscription->is_paid);
-    }
 }
