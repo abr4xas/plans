@@ -4,13 +4,33 @@ namespace Abr4xas\Plans\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Abr4xas\Plans\Exceptions\UnsupportedPaymentMethodException;
 
 class PlanSubscriptionModel extends Model
 {
+
+    use HasFactory;
+
     protected $table = 'plan_subscriptions';
+
     protected $guarded = [];
-    protected $fillable = ['plan_id', 'model_id', 'model_type', 'payment_method', 'is_paid', 'charging_price', 'charging_currency', 'is_recurring', 'recurring_each_days', 'starts_on', 'expires_on', 'cancelled_on'];
+
+    protected $fillable = [
+        'plan_id',
+        'model_id',
+        'model_type',
+        'payment_method',
+        'is_paid',
+        'charging_price',
+        'charging_currency',
+        'is_recurring',
+        'recurring_each_days',
+        'starts_on',
+        'expires_on',
+        'cancelled_on'
+    ];
+
     protected $dates = [
         'starts_on',
         'expires_on',
@@ -71,11 +91,6 @@ class PlanSubscriptionModel extends Model
         return $query->whereNull('cancelled_on');
     }
 
-    public function scopeStripe($query)
-    {
-        return $query->where('payment_method', 'stripe');
-    }
-
     /**
      * Checks if the current subscription has started.
      *
@@ -83,7 +98,7 @@ class PlanSubscriptionModel extends Model
      */
     public function hasStarted()
     {
-        return (bool) Carbon::now()->greaterThanOrEqualTo(Carbon::parse($this->starts_on));
+        return Carbon::now()->greaterThanOrEqualTo(Carbon::parse($this->starts_on));
     }
 
     /**
@@ -93,7 +108,7 @@ class PlanSubscriptionModel extends Model
      */
     public function hasExpired()
     {
-        return (bool) Carbon::now()->greaterThan(Carbon::parse($this->expires_on));
+        return Carbon::now()->greaterThan(Carbon::parse($this->expires_on));
     }
 
     /**
@@ -103,7 +118,7 @@ class PlanSubscriptionModel extends Model
      */
     public function isActive()
     {
-        return (bool) ($this->hasStarted() && ! $this->hasExpired());
+        return ($this->hasStarted() && ! $this->hasExpired());
     }
 
     /**
@@ -114,10 +129,10 @@ class PlanSubscriptionModel extends Model
     public function remainingDays()
     {
         if ($this->hasExpired()) {
-            return (int) 0;
+            return 0;
         }
 
-        return (int) Carbon::now()->diffInDays(Carbon::parse($this->expires_on));
+        return Carbon::now()->diffInDays(Carbon::parse($this->expires_on));
     }
 
     /**
@@ -127,7 +142,7 @@ class PlanSubscriptionModel extends Model
      */
     public function isCancelled()
     {
-        return (bool) $this->cancelled_on != null;
+        return $this->cancelled_on != null;
     }
 
     /**
@@ -137,7 +152,7 @@ class PlanSubscriptionModel extends Model
      */
     public function isPendingCancellation()
     {
-        return (bool) ($this->isCancelled() && $this->isActive());
+        return ($this->isCancelled() && $this->isActive());
     }
 
     /**
@@ -172,6 +187,8 @@ class PlanSubscriptionModel extends Model
         }
 
         $usage = $this->usages()->code($featureCode)->first();
+
+        /** @var mixed|\Illuminate\Config\Repository $usageModel */
 
         if (! $usage) {
             $usage = $this->usages()->save(new $usageModel([
@@ -219,8 +236,9 @@ class PlanSubscriptionModel extends Model
             ]));
         }
 
-        $used = (float) ($feature->isUnlimited()) ? ($usage->used - $amount < 0) ? 0 : ($usage->used - $amount) : ($usage->used - $amount);
-        $remaining = (float) ($feature->isUnlimited()) ? -1 : ($used > 0) ? ($feature->limit - $used) : $feature->limit;
+        $used = (float) ($feature->isUnlimited()) ? (($usage->used - $amount < 0) ? 0 : ($usage->used - $amount)) : ($usage->used - $amount);
+
+        $remaining = ((float) ($feature->isUnlimited()) ? -1 : ($used > 0)) ? ($feature->limit - $used) : $feature->limit;
 
         event(new \Abr4xas\Plans\Events\FeatureUnconsumed($this, $feature, $amount, $remaining));
 
@@ -280,13 +298,6 @@ class PlanSubscriptionModel extends Model
      */
     public function setPaymentMethodAttribute($value)
     {
-        if (! is_null($value)) {
-            $supportedPaymentMethods = config('plans.payment_methods', ['stripe']);
-            if (! in_array($value, $supportedPaymentMethods)) {
-                throw new UnsupportedPaymentMethodException(sprintf('The payment method (%s) does not supported. Supported payment methods: %s', $value, implode(', ', $supportedPaymentMethods)));
-            }
-        } else {
-            $this->attributes['payment_method'] = $value;
-        }
+        $this->attributes['payment_method'] = $value;
     }
 }

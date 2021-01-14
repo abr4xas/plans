@@ -3,11 +3,17 @@
 namespace Abr4xas\Plans\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PlanSubscriptionUsageModel extends Model
 {
+
+    use HasFactory;
+
     protected $table = 'plan_subscription_usages';
+
     protected $guarded = [];
+
     protected $fillable = ['subscription_id', 'code', 'used'];
 
     public function subscription()

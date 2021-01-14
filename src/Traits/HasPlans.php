@@ -6,7 +6,6 @@ use Carbon\Carbon;
 
 trait HasPlans
 {
-    use CanPayWithStripe;
 
     /**
      * Get Subscriptions relatinship.
@@ -181,20 +180,6 @@ trait HasPlans
             'recurring_each_days' => $duration,
         ]));
 
-        if ($this->subscriptionPaymentMethod == 'stripe') {
-            try {
-                $stripeCharge = $this->chargeWithStripe(($this->chargingPrice) ?: $plan->price, ($this->chargingCurrency) ?: $plan->currency);
-
-                $subscription->update([
-                    'is_paid' => true,
-                ]);
-
-                event(new \Abr4xas\Plans\Events\Stripe\ChargeSuccessful($this, $subscription, $stripeCharge));
-            } catch (\Exception $exception) {
-                event(new \Abr4xas\Plans\Events\Stripe\ChargeFailed($this, $subscription, $exception));
-            }
-        }
-
         event(new \Abr4xas\Plans\Events\NewSubscription($this, $subscription));
 
         return $subscription;
@@ -234,20 +219,6 @@ trait HasPlans
             'is_recurring' => $isRecurring,
             'recurring_each_days' => Carbon::now()->subSeconds(1)->diffInDays($date),
         ]));
-
-        if ($this->subscriptionPaymentMethod == 'stripe') {
-            try {
-                $stripeCharge = $this->chargeWithStripe(($this->chargingPrice) ?: $plan->price, ($this->chargingCurrency) ?: $plan->currency);
-
-                $subscription->update([
-                    'is_paid' => true,
-                ]);
-
-                event(new \Abr4xas\Plans\Events\Stripe\ChargeSuccessful($this, $subscription, $stripeCharge));
-            } catch (\Exception $exception) {
-                event(new \Abr4xas\Plans\Events\Stripe\ChargeFailed($this, $subscription, $exception));
-            }
-        }
 
         event(new \Abr4xas\Plans\Events\NewSubscriptionUntil($this, $subscription, $date));
 
@@ -512,10 +483,6 @@ trait HasPlans
         if ($lastActiveSubscription->payment_method) {
             if (! $lastActiveSubscription->is_paid) {
                 return false;
-            }
-
-            if ($lastActiveSubscription->payment_method == 'stripe') {
-                return $this->withStripe()->withStripeToken($stripeToken)->subscribeTo($plan, $recurringEachDays);
             }
         }
 

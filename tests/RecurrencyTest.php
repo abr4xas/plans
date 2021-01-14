@@ -19,7 +19,6 @@ class RecurrencyTest extends TestCase
         $this->plan = factory(\Abr4xas\Plans\Models\PlanModel::class)->create();
         $this->newPlan = factory(\Abr4xas\Plans\Models\PlanModel::class)->create();
 
-        $this->initiateStripeAPI();
     }
 
     /**
@@ -38,7 +37,7 @@ class RecurrencyTest extends TestCase
         $this->assertFalse($this->user->hasActiveSubscription());
         $this->assertEquals($this->user->subscriptions()->count(), 1);
 
-        $this->assertNotNull($this->user->renewSubscription($this->getStripeTestToken()));
+        $this->assertNotNull($this->user->renewSubscription());
         sleep(1);
 
         $this->assertTrue($this->user->hasActiveSubscription());
@@ -50,7 +49,7 @@ class RecurrencyTest extends TestCase
      */
     public function testRecurrencyWithStripe()
     {
-        $this->user->withStripe()->withStripeToken($this->getStripeTestToken())->subscribeToUntil($this->plan, Carbon::now()->addDays(7));
+        $this->user->withStripe()->withStripeToken()->subscribeToUntil($this->plan, Carbon::now()->addDays(7));
         sleep(1);
 
         $this->user->currentSubscription()->update([
@@ -61,7 +60,7 @@ class RecurrencyTest extends TestCase
         $this->assertFalse($this->user->hasActiveSubscription());
         $this->assertEquals($this->user->subscriptions()->count(), 1);
 
-        $this->assertNotNull($this->user->renewSubscription($this->getStripeTestToken()));
+        $this->assertNotNull($this->user->renewSubscription());
         sleep(1);
 
         $activeSubscription = $this->user->activeSubscription();

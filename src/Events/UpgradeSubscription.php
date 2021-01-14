@@ -8,18 +8,19 @@ class UpgradeSubscription
 {
     use SerializesModels;
 
-    public $model;
-    public $subscription;
-    public $startFromNow;
-    public $oldPlan;
-    public $newPlan;
+    public \Illuminate\Database\Eloquent\Model $model;
+    public \Abr4xas\Plans\Models\PlanSubscriptionModel $subscription;
+    public bool $startFromNow;
+    public \Abr4xas\Plans\Models\PlanModel $oldPlan;
+    public \Abr4xas\Plans\Models\PlanModel $newPlan;
 
     /**
-     * @param Model $model The model on which the action was done.
-     * @param SubscriptionModel $subscription Subscription that was upgraded.
+     * @param \Illuminate\Database\Eloquent\Model $model The model on which the action was done.
+     * @param \Abr4xas\Plans\Models\PlanSubscriptionModel $subscription Subscription that was upgraded.
      * @param bool $startFromNow Wether the current subscription is upgraded by extending now or is upgraded at the next cycle.
-     * @param null|PlanModel $oldPlan The old plan.
-     * @param null|PlanModel $newPlan The new plan.
+     * @param null|\Abr4xas\Plans\Models\PlanModel $oldPlan The old plan.
+     * @param null|\Abr4xas\Plans\Models\PlanModel $newPlan The new plan.
+     * @psalm-suppress PossiblyNullPropertyAssignmentValue
      * @return void
      */
     public function __construct($model, $subscription, bool $startFromNow, $oldPlan, $newPlan)

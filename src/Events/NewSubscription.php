@@ -8,12 +8,12 @@ class NewSubscription
 {
     use SerializesModels;
 
-    public $model;
-    public $subscription;
+    public \Illuminate\Database\Eloquent\Model $model;
+    public \Abr4xas\Plans\Models\PlanSubscriptionModel $subscription;
 
     /**
-     * @param Model $model The model that subscribed.
-     * @param SubscriptionModel $subscription Subscription the model has subscribed to.
+     * @param \Illuminate\Database\Eloquent\Model $model The model that subscribed.
+     * @param \Abr4xas\Plans\Models\PlanSubscriptionModel $subscription Subscription the model has subscribed to.
      * @return void
      */
     public function __construct($model, $subscription)

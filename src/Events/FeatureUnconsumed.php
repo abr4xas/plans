@@ -8,14 +8,14 @@ class FeatureUnconsumed
 {
     use SerializesModels;
 
-    public $subscription;
-    public $feature;
-    public $used;
-    public $remaining;
+    public \Abr4xas\Plans\Models\PlanSubscriptionModel $subscription;
+    public \Abr4xas\Plans\Models\PlanFeatureModel $feature;
+    public float $used;
+    public float $remaining;
 
     /**
-     * @param SubscriptionModel $subscription Subscription on which action was done.
-     * @param FeatureModel $feature The feature that was consumed.
+     * @param \Abr4xas\Plans\Models\PlanSubscriptionModel $subscription Subscription on which action was done.
+     * @param \Abr4xas\Plans\Models\PlanFeatureModel $feature The feature that was consumed.
      * @param float $used The amount used on this unconsumption.
      * @param float $remaining The amount remaining for this feature.
      * @return void

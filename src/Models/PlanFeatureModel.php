@@ -3,12 +3,18 @@
 namespace Abr4xas\Plans\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PlanFeatureModel extends Model
 {
+    use HasFactory;
+
     protected $table = 'plan_features';
+
     protected $guarded = [];
+
     protected $fillable = ['plan_id', 'name', 'code', 'description', 'type', 'limit', 'metadata'];
+
     protected $casts = [
         'metadata' => 'object',
     ];
@@ -35,6 +41,6 @@ class PlanFeatureModel extends Model
 
     public function isUnlimited()
     {
-        return (bool) ($this->type == 'limit' && $this->limit < 0);
+        return ($this->type == 'limit' && $this->limit < 0);
     }
 }
