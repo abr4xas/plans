@@ -14,10 +14,6 @@ class PlansServiceProvider extends ServiceProvider
                 __DIR__ . '/../config/plans.php' => config_path('plans.php'),
             ], 'config');
 
-            // $this->publishes([
-            //     __DIR__ . '/../resources/views' => base_path('resources/views/vendor/plans'),
-            // ], 'views');
-
             $migrationFileName = 'create_plans_table.php';
             if (! $this->migrationFileExists($migrationFileName)) {
                 $this->publishes([
@@ -25,8 +21,6 @@ class PlansServiceProvider extends ServiceProvider
                 ], 'migrations');
             }
         }
-
-        // $this->loadViewsFrom(__DIR__ . '/../resources/views', 'plans');
     }
 
     public function register()
