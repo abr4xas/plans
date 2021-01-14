@@ -6,6 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Abr4xas\Plans\Traits\ResolveClass;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class PlanSubscriptionModel extends Model
 {
@@ -42,12 +45,12 @@ class PlanSubscriptionModel extends Model
         'is_recurring' => 'boolean',
     ];
 
-    public function model()
+    public function model(): MorphTo
     {
         return $this->morphTo();
     }
 
-    public function plan()
+    public function plan(): BelongsTo
     {
         return $this->belongsTo($this->resolveClass('plans.models.plan'), 'plan_id');
     }
@@ -57,7 +60,7 @@ class PlanSubscriptionModel extends Model
         return $this->plan()->first()->features();
     }
 
-    public function usages()
+    public function usages(): HasMany
     {
         return $this->hasMany($this->resolveClass('plans.models.usage'), 'subscription_id');
     }
@@ -295,7 +298,7 @@ class PlanSubscriptionModel extends Model
      * Supported payment methods in the plans.payment_methods array
      * If we need add a new payment method, just append the array and use all system.
      */
-    public function setPaymentMethodAttribute($value)
+    public function setPaymentMethodAttribute($value): void
     {
         $this->attributes['payment_method'] = $value;
     }
