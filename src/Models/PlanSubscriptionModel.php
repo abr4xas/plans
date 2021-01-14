@@ -2,17 +2,16 @@
 
 namespace Abr4xas\Plans\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Abr4xas\Plans\Traits\ResolveClass;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class PlanSubscriptionModel extends Model
 {
-
     use HasFactory;
     use ResolveClass;
 
@@ -32,7 +31,7 @@ class PlanSubscriptionModel extends Model
         'recurring_each_days',
         'starts_on',
         'expires_on',
-        'cancelled_on'
+        'cancelled_on',
     ];
 
     protected $dates = [

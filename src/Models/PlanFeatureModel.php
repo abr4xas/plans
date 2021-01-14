@@ -3,9 +3,9 @@
 namespace Abr4xas\Plans\Models;
 
 use Abr4xas\Plans\Traits\ResolveClass;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PlanFeatureModel extends Model
 {
@@ -23,7 +23,7 @@ class PlanFeatureModel extends Model
         'description',
         'type',
         'limit',
-        'metadata'
+        'metadata',
     ];
 
     protected $casts = [

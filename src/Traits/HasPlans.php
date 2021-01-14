@@ -6,7 +6,6 @@ use Carbon\Carbon;
 
 trait HasPlans
 {
-
     /**
      * Get Subscriptions relatinship.
      *

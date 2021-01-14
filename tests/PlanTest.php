@@ -2,8 +2,8 @@
 
 namespace Abr4xas\Plans\Test;
 
-use Carbon\Carbon;
 use Abr4xas\Plans\Tests\TestCase;
+use Carbon\Carbon;
 
 class PlanTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace Abr4xas\Plans\Test;
 
-use Abr4xas\Plans\Tests\TestCase;
 use Abr4xas\Plans\Models\PlanFeatureModel;
+use Abr4xas\Plans\Tests\TestCase;
 
 class FeatureTest extends TestCase
 {
