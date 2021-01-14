@@ -286,44 +286,6 @@ foreach(User::all() as $user) {
 }
 ```
 
-If you use the integrated Stripe Charge feature, you will have to pass a Stripe Token to charge from that user. Since Stripe Tokens are disposable (one-time use), you will have to manage getting a token from your users.
-```php
-$user->renewSubscription('tok...');
-```
-
-As always, if the payment was processed, it will fire the `Abr4xas\Plans\Stripe\ChargeSuccessful` event, or if the payment failed, it will fire `Abr4xas\Plans\Stripe\ChargeFailed` event.
-
-# Due subscriptions
-Subscriptions that are not using the local Stripe Charge feature will never be marked as `Due` since all of them are paid, by default.
-
-If your app uses your own payment method, you can pass a closure for the following `chargeForLastDueSubscription()` method that will help you get control over the due subscription:
-```php
-$user->chargeForLastDueSubscription(function($subscription) {
-    // process the payment here
-
-    if($paymentSuccessful) {
-        $subscription->update([
-            'is_paid' => true,
-            'starts_on' => Carbon::now(),
-            'expires_on' => Carbon::now()->addDays($subscription->recurring_each_days),
-        ]);
-
-        return $subscription;
-    }
-
-    return null;
-});
-```
-
-On failed payment, they are marked as Due. They need to be paid, and each action like subscribing, upgrading or extending will always try to re-pay the subscription by deleting the last one, creating the one intended in one of the actions mentioned and trying to pay it.
-
-To do so, `chargeForLastDueSubscription()` will help you charge the user for the last, unpaid subscription. You will have to explicitly pass a Stripe Token for this:
-```php
-$user->withStripe()->withStripeToken('tok_...')->chargeForLastDueSubscription();
-```
-
-For this method, `\Abr4xas\Plans\Events\Stripe\DueSubscriptionChargeSuccess` and `\Abr4xas\Plans\Events\Stripe\DueSubscriptionChargeFailed` are thrown on succesful charge or failed charge.
-
 # Model Extends
 
 You can extend Plan models as well
@@ -370,20 +332,10 @@ class PlanSubscriptionUsage extends PlanSubscriptionUsageModel {
 }
 ```
 
-## StripteCustomerModel
-```php
-<?php
-namespace App\Models;
-use Abr4xas\Plans\Models\StripteCustomerModel;
-class StripeCustomer extends StripteCustomerModel {
-    //
-}
-```
-
 # Events
 When using subscription plans, you want to listen for events to automatically run code that might do changes for your app.
 
-Events are easy to use. If you are not familiar, you can check [Laravel's Official Documentation on Events](https://laravel.com/docs/5.6/events).
+Events are easy to use. If you are not familiar, you can check [Laravel's Official Documentation on Events](https://laravel.com/docs/master/events).
 
 All you have to do is to implement the following Events in your `EventServiceProvider.php` file. Each event will have it's own members than can be accessed through the `$event` variable within the `handle()` method in your listener.
 
@@ -441,26 +393,6 @@ $listen = [
         // $event->feature = The feature that was used.
         // $event->used = The amount reverted.
         // $event->remaining = The total amount remaining. If the feature is unlimited, will return -1
-    ],
-    \Abr4xas\Plans\Events\Stripe\ChargeFailed::class => [
-        // $event->model = The model for which the payment failed.
-        // $event->subscription = The subscription.
-        // $event->exception = The exception thrown by the Stripe API wrapper.
-    ],
-    \Abr4xas\Plans\Events\Stripe\ChargeSuccessful::class => [
-        // $event->model = The model for which the payment succeded.
-        // $event->subscription = The subscription which was updated as paid.
-        // $event->stripeCharge = The response coming from the Stripe API wrapper.
-    ],
-    \Abr4xas\Plans\Events\Stripe\DueSubscriptionChargeFailed::class => [
-        // $event->model = The model for which the payment failed.
-        // $event->subscription = The due subscription that cannot be paid.
-        // $event->exception = The exception thrown by the Stripe API wrapper.
-    ],
-    \Abr4xas\Plans\Events\Stripe\DueSubscriptionChargeSuccess::class => [
-        // $event->model = The model for which the payment succeded.
-        // $event->subscription = The due subscription that was paid.
-        // $event->stripeCharge = The response coming from the Stripe API wrapper.
     ],
 ];
 ```

@@ -449,10 +449,9 @@ trait HasPlans
      * Renew the subscription, if needed, and create a new charge
      * if the last active subscription was using Stripe and was paid.
      *
-     * @param string $stripeToken The stripe Token for integrated Stripe Charge feature.
      * @return false|PlanSubscriptionModel
      */
-    public function renewSubscription($stripeToken = null)
+    public function renewSubscription()
     {
         if (! $this->hasSubscriptions()) {
             return false;
