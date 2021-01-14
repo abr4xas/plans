@@ -2,7 +2,6 @@
 
 namespace Abr4xas\Plans;
 
-use Abr4xas\Plans\Commands\PlansCommand;
 use Illuminate\Support\ServiceProvider;
 
 class PlansServiceProvider extends ServiceProvider

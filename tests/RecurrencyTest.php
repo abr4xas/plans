@@ -2,8 +2,8 @@
 
 namespace Abr4xas\Plans\Test;
 
-use Carbon\Carbon;
 use Abr4xas\Plans\Tests\TestCase;
+use Carbon\Carbon;
 
 class RecurrencyTest extends TestCase
 {
@@ -18,7 +18,6 @@ class RecurrencyTest extends TestCase
         $this->user = factory(\Abr4xas\Plans\Test\Models\User::class)->create();
         $this->plan = factory(\Abr4xas\Plans\Models\PlanModel::class)->create();
         $this->newPlan = factory(\Abr4xas\Plans\Models\PlanModel::class)->create();
-
     }
 
     /**

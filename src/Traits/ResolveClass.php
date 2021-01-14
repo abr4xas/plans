@@ -3,7 +3,6 @@ namespace Abr4xas\Plans\Traits;
 
 trait ResolveClass
 {
-
     /**
      * Undocumented function
      *

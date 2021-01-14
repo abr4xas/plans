@@ -3,13 +3,12 @@
 namespace Abr4xas\Plans\Models;
 
 use Abr4xas\Plans\Traits\ResolveClass;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PlanModel extends Model
 {
-
     use HasFactory;
     use ResolveClass;
 
@@ -23,7 +22,7 @@ class PlanModel extends Model
         'price',
         'currency',
         'duration',
-        'metadata'
+        'metadata',
     ];
 
     protected $casts = [

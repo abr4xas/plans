@@ -3,13 +3,12 @@
 namespace Abr4xas\Plans\Models;
 
 use Abr4xas\Plans\Traits\ResolveClass;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PlanSubscriptionUsageModel extends Model
 {
-
     use HasFactory;
     use ResolveClass;
 
@@ -20,7 +19,7 @@ class PlanSubscriptionUsageModel extends Model
     protected $fillable = [
         'subscription_id',
         'code',
-        'used'
+        'used',
     ];
 
     public function subscription(): BelongsTo
