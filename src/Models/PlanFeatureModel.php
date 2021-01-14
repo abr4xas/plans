@@ -2,13 +2,15 @@
 
 namespace Abr4xas\Plans\Models;
 
+use Abr4xas\Plans\Traits\ResolveClass;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PlanFeatureModel extends Model
 {
     use HasFactory;
+    use ResolveClass;
 
     protected $table = 'plan_features';
 
@@ -31,7 +33,7 @@ class PlanFeatureModel extends Model
     /** @psalm-suppress PossiblyInvalidCast */
     public function plan(): BelongsTo
     {
-        return $this->belongsTo(config('plans.models.plan'), 'plan_id');
+        return $this->belongsTo($this->resolveClass('plans.models.plan'), 'plan_id');
     }
 
     /**

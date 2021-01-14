@@ -4,13 +4,14 @@ namespace Abr4xas\Plans\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Abr4xas\Plans\Traits\ResolveClass;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Abr4xas\Plans\Exceptions\UnsupportedPaymentMethodException;
 
 class PlanSubscriptionModel extends Model
 {
 
     use HasFactory;
+    use ResolveClass;
 
     protected $table = 'plan_subscriptions';
 
@@ -48,7 +49,7 @@ class PlanSubscriptionModel extends Model
 
     public function plan()
     {
-        return $this->belongsTo(config('plans.models.plan'), 'plan_id');
+        return $this->belongsTo($this->resolveClass('plans.models.plan'), 'plan_id');
     }
 
     public function features()
@@ -58,7 +59,7 @@ class PlanSubscriptionModel extends Model
 
     public function usages()
     {
-        return $this->hasMany(config('plans.models.usage'), 'subscription_id');
+        return $this->hasMany($this->resolveClass('plans.models.usage'), 'subscription_id');
     }
 
     public function scopePaid($query)
@@ -178,7 +179,7 @@ class PlanSubscriptionModel extends Model
      */
     public function consumeFeature(string $featureCode, float $amount)
     {
-        $usageModel = config('plans.models.usage');
+        $usageModel = $this->resolveClass('plans.models.usage');
 
         $feature = $this->features()->code($featureCode)->first();
 
@@ -187,8 +188,6 @@ class PlanSubscriptionModel extends Model
         }
 
         $usage = $this->usages()->code($featureCode)->first();
-
-        /** @var mixed|\Illuminate\Config\Repository $usageModel */
 
         if (! $usage) {
             $usage = $this->usages()->save(new $usageModel([
@@ -219,7 +218,7 @@ class PlanSubscriptionModel extends Model
      */
     public function unconsumeFeature(string $featureCode, float $amount)
     {
-        $usageModel = config('plans.models.usage');
+        $usageModel = $this->resolveClass('plans.models.usage');
 
         $feature = $this->features()->code($featureCode)->first();
 
