@@ -1,7 +1,7 @@
 # plans
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/abr4xas/plans.svg?style=flat-square)](https://packagist.org/packages/abr4xas/plans)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/abr4xas/plans/run-tests?label=tests)](https://github.com/abr4xas/plans/actions?query=workflow%3ATests+branch%3Amaster)
+[![GitHub Tests Action Status](https://github.com/abr4xas/plans/workflows/Tests/badge.svg)](https://github.com/abr4xas/plans/actions)
 [![Total Downloads](https://img.shields.io/packagist/dt/abr4xas/plans.svg?style=flat-square)](https://packagist.org/packages/abr4xas/plans)
 
 
